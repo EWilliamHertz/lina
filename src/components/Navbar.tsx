@@ -20,6 +20,10 @@ export default function Navbar() {
             <ShoppingBag size={16} />
             Shop
           </Link>
+          <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-2">
+            <ImageIcon size={16} />
+            About Me
+          </Link>
         </div>
       </div>
     </nav>

@@ -39,7 +39,7 @@ export default function AboutPage() {
                 I create art and illustrations focusing on nature, animals, and fantasy of all kinds. From me, you can order everything from playful illustrations for children's books to timeless artworks to decorate your home. I studied Illustration at Berghs School of Communication in Stockholm, but beyond that, I am entirely self-taught.
               </p>
               <p>
-                Painting and creating have always been a natural part of me, and watercolor holds a particularly special place in my heart. It easily becomes uneven, playful, quirky, and unique with every brushstroke—exactly how I prefer it in both books and art!
+                Painting and creating have always been a natural part of me, and watercolor holds a particularly special place in my heart. It easily becomes uneven, playful, quirky, and unique with every brushstroke, exactly how I prefer it in both books and art!
               </p>
               <p>
                 Whether you are here as a customer, a colleague, or just a curious soul, I am incredibly happy that you stopped by.
