@@ -1,3 +1,4 @@
+// src/app/gallery/page.tsx
 import FadeIn from "@/components/FadeIn";
 import PastPrintingsGallery from "@/components/PastPrintingsGallery";
 import { PrismaClient } from "@prisma/client";
@@ -10,12 +11,23 @@ const prisma = new PrismaClient({ adapter });
 
 export const dynamic = "force-dynamic";
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default async function GalleryPage() {
-  // Fetch ONLY items that are NOT in the shop
-  const prints = await prisma.print.findMany({
+  const rawPrints = await prisma.print.findMany({
     where: { isForSale: false },
-    orderBy: { createdAt: "desc" },
   });
+
+  // Randomize the order on every refresh
+  const randomizedPrints = shuffleArray(rawPrints);
 
   return (
     <div className="flex flex-col gap-16 py-10">
@@ -25,14 +37,14 @@ export default async function GalleryPage() {
             Archive & Gallery
           </h1>
           <p className="text-gray-500 text-sm tracking-wide uppercase">
-            A curated selection of past printings
+            A curated selection of past paintings
           </p>
         </header>
       </FadeIn>
 
       <FadeIn delay={0.2}>
-        {prints.length > 0 ? (
-          <PastPrintingsGallery prints={prints} />
+        {randomizedPrints.length > 0 ? (
+          <PastPrintingsGallery prints={randomizedPrints} />
         ) : (
           <div className="text-center py-32 text-gray-400">
             <p>No gallery images found. Use the Staff panel to upload some!</p>

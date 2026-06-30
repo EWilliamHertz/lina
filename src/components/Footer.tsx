@@ -22,7 +22,7 @@ export default function Footer() {
           <span className="text-gray-200">|</span>
           <Link 
             href="/staff" 
-            className="opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity duration-500 tracking-widest uppercase cursor-default hover:cursor-pointer"
+            className="text-gray-200 hover:text-gray-600 transition-colors duration-300 tracking-widest uppercase"
           >
             STAFF
           </Link>

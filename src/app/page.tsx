@@ -1,33 +1,31 @@
+// src/app/page.tsx
 import FadeIn from "@/components/FadeIn";
 import PastPrintingsGallery from "@/components/PastPrintingsGallery";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-
-
-
-// Create a connection pool using the pg driver
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
-
-
-
-
-// Initialize Prisma Client with the new v7 adapter requirement
 const prisma = new PrismaClient({ adapter });
 
-
-
-
-// This forces Next.js to dynamically fetch the database on every page load
 export const dynamic = "force-dynamic"; 
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default async function Home() {
-  // Fetch prints from Neon, ordering by the newest first
-  const prints = await prisma.print.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const rawPrints = await prisma.print.findMany();
+  
+  // Randomize the order on every refresh
+  const randomizedPrints = shuffleArray(rawPrints);
 
   return (
     <div className="flex flex-col gap-24 py-10">
@@ -37,17 +35,17 @@ export default async function Home() {
             Selected Works
           </h1>
           <p className="text-gray-500 text-sm tracking-wide uppercase">
-            An archive of past printings & exhibitions
+            An archive of past paintings & exhibitions
           </p>
         </header>
       </FadeIn>
 
       <FadeIn delay={0.2}>
-        {prints.length > 0 ? (
-          <PastPrintingsGallery prints={prints} />
+        {randomizedPrints.length > 0 ? (
+          <PastPrintingsGallery prints={randomizedPrints} />
         ) : (
           <div className="text-center py-32 text-gray-400">
-            <p>No printings found in the database yet.</p>
+            <p>No paintings found in the database yet.</p>
           </div>
         )}
       </FadeIn>
